@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Infra测试车7月使用时长报告</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft YaHei', sans-serif; background: #f5f7fa; padding: 20px; }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 30px; font-size: 24px; }
+        h2 { color: #34495e; margin: 20px 0 10px; font-size: 18px; border-left: 4px solid #3498db; padding-left: 10px; }
+        .section { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 15px; }
+        th, td { padding: 8px 6px; text-align: center; border: 1px solid #e0e0e0; }
+        th { background: #2c3e50; color: #fff; font-weight: 600; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        tr:hover { background: #fffde7 !important; }
+        .summary { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .summary-card { padding: 12px 18px; border-radius: 8px; color: #fff; flex: 1; min-width: 150px; }
+        .summary-card h3 { font-size: 12px; opacity: 0.9; }
+        .summary-card .value { font-size: 24px; font-weight: bold; margin-top: 4px; }
+        .sc-blue { background: linear-gradient(135deg, #2193b0, #6dd5ed); }
+        .sc-purple { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .sc-green { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .sc-orange { background: linear-gradient(135deg, #f7971e, #ffd200); }
+        .chart-container { width: 100%; height: 400px; position: relative; }
+        .duration-bar { display: inline-block; height: 14px; border-radius: 2px; vertical-align: middle; margin-right: 4px; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<h1>Infra测试车 2026年7月(07-01~07-31) 使用报告</h1>
+
+<script>
+const allData = [
+  {ts:1782835200000,start:"9:30",end:"12:00",hours:2.5,src:"trigger测试"},
+  {ts:1782835200000,start:"14:00",end:"17:00",hours:3,src:"daily测试"},
+  {ts:1782835200000,start:"17:00",end:"19:00",hours:2,src:"研发自测"},
+  {ts:1782921600000,start:"9:30",end:"16:00",hours:6.5,src:"trigger测试"},
+  {ts:1782921600000,start:"16:00",end:"17:00",hours:1,src:"研发自测"},
+  {ts:1782921600000,start:"17:00",end:"19:00",hours:2,src:"研发自测"},
+  {ts:1783008000000,start:"9:30",end:"19:00",hours:9.5,src:"trigger测试"},
+  {ts:1783267200000,start:"9:30",end:"15:00",hours:5.5,src:"trigger测试"},
+  {ts:1783267200000,start:"15:00",end:"19:00",hours:4,src:"研发自测"},
+  {ts:1783353600000,start:"9:30",end:"17:00",hours:7.5,src:"trigger测试"},
+  {ts:1783353600000,start:"17:00",end:"19:00",hours:2,src:"研发自测"},
+  {ts:1783440000000,start:"9:30",end:"13:30",hours:4,src:"研发自测"},
+  {ts:1783440000000,start:"14:00",end:"17:00",hours:3,src:"研发自测"},
+  {ts:1783440000000,start:"17:00",end:"19:00",hours:2,src:"研发自测"},
+  {ts:1783526400000,start:"9:30",end:"19:00",hours:9.5,src:"研发自测"},
+  {ts:1783612800000,start:"9:30",end:"19:00",hours:9.5,src:"研发自测"},
+  {ts:1783612800000,start:"19:00",end:"22:30",hours:3.5,src:"研发自测"},
+  {ts:1783872000000,start:"9:30",end:"19:00",hours:9.5,src:"trigger测试"},
+  {ts:1783958400000,start:"9:30",end:"12:00",hours:2.5,src:"trigger测试"},
+  {ts:1783958400000,start:"14:00",end:"19:00",hours:5,src:"研发自测"},
+  {ts:1784044800000,start:"9:30",end:"19:00",hours:9.5,src:"trigger测试"},
+  {ts:1784131200000,start:"9:30",end:"16:00",hours:6.5,src:"研发自测"},
+  {ts:1784131200000,start:"16:00",end:"19:00",hours:3,src:"trigger测试"},
+  {ts:1784217600000,start:"9:30",end:"19:00",hours:9.5,src:"研发自测"},
+  {ts:1784476800000,start:"9:30",end:"12:00",hours:2.5,src:"trigger测试"},
+  {ts:1784476800000,start:"14:00",end:"17:00",hours:3,src:"daily测试"},
+  {ts:1784476800000,start:"17:00",end:"19:00",hours:2,src:"trigger测试"},
+  {ts:1784563200000,start:"9:30",end:"12:00",hours:2.5,src:"trigger测试"},
+  {ts:1784563200000,start:"14:00",end:"17:00",hours:3,src:"daily测试"},
+  {ts:1784649600000,start:"9:30",end:"12:00",hours:2.5,src:"trigger测试"},
+  {ts:1784649600000,start:"14:00",end:"17:00",hours:3,src:"daily测试"},
+  {ts:1784736000000,start:"9:30",end:"14:00",hours:4.5,src:"研发自测"},
+  {ts:1784736000000,start:"15:00",end:"18:00",hours:3,src:"daily测试"},
+  {ts:1784822400000,start:"9:30",end:"12:00",hours:2.5,src:"trigger测试"},
+  {ts:1784822400000,start:"14:00",end:"17:00",hours:3,src:"daily测试"},
+  {ts:1784822400000,start:"17:00",end:"19:00",hours:2,src:"研发自测"},
+  {ts:1785081600000,start:"9:30",end:"12:00",hours:2.5,src:"trigger测试"},
+  {ts:1785081600000,start:"14:00",end:"19:30",hours:5.5,src:"研发自测"},
+  {ts:1785168000000,start:"9:30",end:"12:00",hours:2.5,src:"trigger测试"},
+  {ts:1785168000000,start:"14:00",end:"19:00",hours:5,src:"研发自测"},
+  {ts:1785254400000,start:"9:30",end:"17:00",hours:7.5,src:"trigger测试"},
+  {ts:1785340800000,start:"9:30",end:"19:00",hours:9.5,src:"trigger测试"},
+  {ts:1785427200000,start:"9:30",end:"19:00",hours:9.5,src:"trigger测试"},
+  {ts:1782748800000,start:"09:27",end:"12:45",hours:3.3,src:"daily测试"},
+  {ts:1782748800000,start:"12:45",end:"17:33",hours:4.8,src:"daily测试"},
+  {ts:1782835200000,start:"09:22",end:"12:45",hours:3.4,src:"daily测试"},
+  {ts:1782835200000,start:"12:45",end:"16:55",hours:4.2,src:"daily测试"},
+  {ts:1782921600000,start:"09:07",end:"12:15",hours:3.1,src:"daily测试"},
+  {ts:1782921600000,start:"12:15",end:"17:31",hours:5.3,src:"daily测试"},
+  {ts:1783008000000,start:"09:20",end:"12:36",hours:3.3,src:"daily测试"},
+  {ts:1783008000000,start:"12:36",end:"17:03",hours:4.5,src:"daily测试"},
+  {ts:1783267200000,start:"09:22",end:"12:36",hours:3.2,src:"daily测试"},
+  {ts:1783267200000,start:"12:36",end:"17:11",hours:4.6,src:"daily测试"},
+  {ts:1783353600000,start:"09:22",end:"12:36",hours:3.2,src:"daily测试"},
+  {ts:1783353600000,start:"12:36",end:"17:25",hours:4.8,src:"daily测试"},
+  {ts:1783440000000,start:"09:22",end:"12:05",hours:2.7,src:"daily测试"},
+  {ts:1783440000000,start:"12:05",end:"17:04",hours:5,src:"daily测试"},
+  {ts:1783526400000,start:"09:25",end:"12:35",hours:3.2,src:"daily测试"},
+  {ts:1783526400000,start:"12:35",end:"16:51",hours:4.3,src:"daily测试"},
+  {ts:1783612800000,start:"09:22",end:"12:01",hours:2.7,src:"daily测试"},
+  {ts:1783612800000,start:"12:01",end:"16:55",hours:4.9,src:"daily测试"},
+  {ts:1783872000000,start:"09:22",end:"12:45",hours:3.4,src:"daily测试"},
+  {ts:1783872000000,start:"12:45",end:"17:25",hours:4.7,src:"daily测试"},
+  {ts:1783872000000,start:"17:25",end:"22:01",hours:4.6,src:"研发自测"},
+  {ts:1783958400000,start:"09:22",end:"12:30",hours:3.1,src:"daily测试"},
+  {ts:1783958400000,start:"12:30",end:"16:55",hours:4.4,src:"daily测试"},
+  {ts:1783958400000,start:"16:55",end:"22:00",hours:5.1,src:"研发自测"},
+  {ts:1784044800000,start:"09:22",end:"12:45",hours:3.4,src:"daily测试"},
+  {ts:1784044800000,start:"12:45",end:"17:25",hours:4.7,src:"daily测试"},
+  {ts:1784131200000,start:"09:22",end:"12:30",hours:3.1,src:"daily测试"},
+  {ts:1784131200000,start:"12:30",end:"16:55",hours:4.4,src:"daily测试"},
+  {ts:1784217600000,start:"09:22",end:"12:45",hours:3.4,src:"daily测试"},
+  {ts:1784217600000,start:"12:45",end:"17:25",hours:4.7,src:"daily测试"},
+  {ts:1785081600000,start:"09:22",end:"12:45",hours:3.4,src:"daily测试"},
+  {ts:1785081600000,start:"12:45",end:"17:25",hours:4.7,src:"daily测试"},
+  {ts:1785168000000,start:"09:22",end:"12:45",hours:3.4,src:"daily测试"},
+  {ts:1785168000000,start:"12:45",end:"17:25",hours:4.7,src:"daily测试"},
+  {ts:1785254400000,start:"09:22",end:"12:45",hours:3.4,src:"daily测试"},
+  {ts:1785254400000,start:"12:45",end:"16:55",hours:4.2,src:"daily测试"},
+  {ts:1785340800000,start:"09:22",end:"17:25",hours:8.1,src:"daily测试"},
+  {ts:1785427200000,start:"09:22",end:"17:01",hours:7.7,src:"daily测试"},
+];
+
+function tsToDate(ts) {
+    const d = new Date(ts + 8*3600*1000);
+    return `07-${String(d.getUTCDate()).padStart(2,'0')}`;
+}
+function timeToDecimal(t) {
+    const p = t.trim().split(':');
+    return parseInt(p[0]) + parseInt(p[1]||0)/60;
+}
+
+function buildChartData() {
+    const sources = ['trigger测试','daily测试','研发自测'];
+    const grouped = {};
+    allData.forEach(r => {
+        const date = tsToDate(r.ts);
+        if (!grouped[date]) grouped[date] = {};
+        if (!grouped[date][r.src]) grouped[date][r.src] = {minStart:24, maxEnd:0};
+        const s = timeToDecimal(r.start), e = timeToDecimal(r.end);
+        if (s < grouped[date][r.src].minStart) grouped[date][r.src].minStart = s;
+        if (e > grouped[date][r.src].maxEnd) grouped[date][r.src].maxEnd = e;
+    });
+    const dates = Object.keys(grouped).sort();
+    return {dates, grouped, sources};
+}
+
+function buildDurationData() {
+    const sources = ['trigger测试','daily测试','研发自测'];
+    const grouped = {};
+    allData.forEach(r => {
+        const date = tsToDate(r.ts);
+        if (!grouped[date]) grouped[date] = {};
+        grouped[date][r.src] = (grouped[date][r.src]||0) + r.hours;
+    });
+    const dates = Object.keys(grouped).sort();
+    return {dates, grouped, sources};
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const {dates, grouped, sources} = buildChartData();
+    const colors = {
+        'trigger测试': {start:'#27ae60', end:'#1abc9c'},
+        'daily测试': {start:'#2980b9', end:'#3498db'},
+        '研发自测': {start:'#e67e22', end:'#f39c12'}
+    };
+
+    // Chart 1: 折线图 - 每日开始/结束时间
+    const datasets1 = [];
+    sources.forEach(src => {
+        const startData = dates.map(d => grouped[d]&&grouped[d][src] ? grouped[d][src].minStart : null);
+        const endData = dates.map(d => grouped[d]&&grouped[d][src] ? grouped[d][src].maxEnd : null);
+        datasets1.push({
+            label: src + ' 开始',
+            data: startData,
+            borderColor: colors[src].start,
+            backgroundColor: colors[src].start,
+            borderWidth: 2,
+            pointRadius: 3,
+            tension: 0.3,
+            spanGaps: true,
+            borderDash: [],
+        });
+        datasets1.push({
+            label: src + ' 结束',
+            data: endData,
+            borderColor: colors[src].end,
+            backgroundColor: colors[src].end,
+            borderWidth: 2,
+            pointRadius: 3,
+            tension: 0.3,
+            spanGaps: true,
+            borderDash: [5,3],
+        });
+    });
+
+    new Chart(document.getElementById('chart1'), {
+        type: 'line',
+        data: { labels: dates, datasets: datasets1 },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            const v = ctx.raw;
+                            if(v===null) return '';
+                            const h = Math.floor(v), m = Math.round((v-h)*60);
+                            return `${ctx.dataset.label}: ${h}:${String(m).padStart(2,'0')}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    min: 8,
+                    max: 23,
+                    reverse: false,
+                    title: { display: true, text: '时间' },
+                    ticks: {
+                        callback: v => `${Math.floor(v)}:${String(Math.round((v%1)*60)).padStart(2,'0')}`,
+                        stepSize: 1
+                    }
+                },
+                x: { title: { display: true, text: '日期' } }
+            }
+        }
+    });
+
+    // Chart 2: 折线图 - 每日时长
+    const dur = buildDurationData();
+    const datasets2 = sources.map(src => ({
+        label: src,
+        data: dur.dates.map(d => dur.grouped[d]&&dur.grouped[d][src] ? dur.grouped[d][src] : null),
+        borderColor: colors[src].start,
+        backgroundColor: colors[src].start + '33',
+        borderWidth: 2.5,
+        pointRadius: 4,
+        pointBackgroundColor: colors[src].start,
+        tension: 0.3,
+        spanGaps: true,
+        fill: false,
+    }));
+    // 增加每日总时长线
+    datasets2.push({
+        label: '每日总时长',
+        data: dur.dates.map(d => {
+            let t = 0;
+            sources.forEach(s => { if(dur.grouped[d]&&dur.grouped[d][s]) t += dur.grouped[d][s]; });
+            return t > 0 ? t : null;
+        }),
+        borderColor: '#2c3e50',
+        backgroundColor: '#2c3e5022',
+        borderWidth: 3,
+        pointRadius: 5,
+        pointBackgroundColor: '#2c3e50',
+        tension: 0.3,
+        spanGaps: true,
+        fill: false,
+        borderDash: [6,3],
+    });
+
+    new Chart(document.getElementById('chart2'), {
+        type: 'line',
+        data: { labels: dur.dates, datasets: datasets2 },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: false },
+                tooltip: { callbacks: { label: ctx => ctx.raw!==null ? `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}h` : '' } }
+            },
+            scales: {
+                x: { title: { display: true, text: '日期' } },
+                y: { title: { display: true, text: '时长(h)' }, beginAtZero: true }
+            }
+        }
+    });
+
+    // Duration summary table
+    const triggerTotal = allData.filter(r=>r.src==='trigger测试').reduce((s,r)=>s+r.hours,0);
+    const dailyTotal = allData.filter(r=>r.src==='daily测试').reduce((s,r)=>s+r.hours,0);
+    const selfTotal = allData.filter(r=>r.src==='研发自测').reduce((s,r)=>s+r.hours,0);
+    document.getElementById('durationTable').innerHTML = `
+        <table style="max-width:500px;margin:15px auto 0;">
+            <tr><th style="background:#27ae60">trigger测试</th><th style="background:#2980b9">daily测试</th><th style="background:#e67e22">研发自测</th><th>总计</th></tr>
+            <tr><td><strong>${triggerTotal.toFixed(1)} h</strong></td><td><strong>${dailyTotal.toFixed(1)} h</strong></td><td><strong>${selfTotal.toFixed(1)} h</strong></td><td><strong>${totalH} h</strong></td></tr>
+        </table>
+    `;
+
+    // Summary
+    const srcTotals = {};
+    allData.forEach(r => { srcTotals[r.src] = (srcTotals[r.src]||0) + r.hours; });
+    const totalH = allData.reduce((s,r)=>s+r.hours,0).toFixed(1);
+    document.getElementById('summary').innerHTML = `
+        <div class="summary-card sc-purple"><h3>总测试时长</h3><div class="value">${totalH} h</div></div>
+        <div class="summary-card sc-green"><h3>trigger测试</h3><div class="value">${(srcTotals['trigger测试']||0).toFixed(1)} h</div></div>
+        <div class="summary-card sc-blue"><h3>daily测试</h3><div class="value">${(srcTotals['daily测试']||0).toFixed(1)} h</div></div>
+        <div class="summary-card sc-orange"><h3>研发自测</h3><div class="value">${(srcTotals['研发自测']||0).toFixed(1)} h</div></div>
+    `;
+
+
+});
+</script>
+
+<div class="section">
+    <div class="summary" id="summary"></div>
+</div>
+
+<div class="section">
+    <h2 style="border-left-color:#27ae60">按测试来源展示每日开始时间和结束时间</h2>
+    <p style="color:#888;font-size:12px;margin-bottom:10px;">实线=开始时间，虚线=结束时间</p>
+    <div class="chart-container"><canvas id="chart1"></canvas></div>
+</div>
+
+<div class="section">
+    <h2 style="border-left-color:#e67e22">按测试来源展示每日时长</h2>
+    <div class="chart-container"><canvas id="chart2"></canvas></div>
+    <div id="durationTable"></div>
+</div>
+
+</body>
+</html>
