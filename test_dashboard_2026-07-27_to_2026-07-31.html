@@ -70,13 +70,15 @@
         <canvas id="mx11TimeChart"></canvas>
       </div>
     </div>
-    <div class="chart-container">
-      <div class="chart-title">各车日均测试时长对比</div>
-      <canvas id="avgDurChart"></canvas>
-    </div>
-    <div class="chart-container" style="max-width:500px;margin:0 auto;">
-      <div class="chart-title">需求者部门分布 (全部车辆)</div>
-      <canvas id="overviewDepts"></canvas>
+    <div class="grid2">
+      <div class="chart-container">
+        <div class="chart-title">各车日均测试时长对比</div>
+        <canvas id="avgDurChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <div class="chart-title">需求者部门分布 (全部车辆)</div>
+        <canvas id="overviewDepts"></canvas>
+      </div>
     </div>
   </div>
 
@@ -263,7 +265,7 @@ new Chart(document.getElementById('mx11TimeChart'), {
   }
 });
 
-// Average daily duration bar chart
+// Average daily duration horizontal bar chart
 const avgDurData = allData.map(car => ({
   label: car.key,
   avg: Math.round(car.totalH / car.days * 10) / 10,
@@ -283,14 +285,15 @@ new Chart(document.getElementById('avgDurChart'), {
     }]
   },
   options: {
+    indexAxis: 'y',
     responsive: true,
     plugins: {
       legend: { display: false },
       tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}h/天` } }
     },
     scales: {
-      y: { beginAtZero: true, title: { display: true, text: 'h/天' }, grid: { color: '#f0f0f0' } },
-      x: { grid: { display: false } }
+      x: { beginAtZero: true, title: { display: true, text: 'h/天' }, grid: { color: '#f0f0f0' } },
+      y: { grid: { display: false } }
     }
   }
 });
