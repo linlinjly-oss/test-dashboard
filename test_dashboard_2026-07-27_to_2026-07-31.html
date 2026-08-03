@@ -70,6 +70,10 @@
         <canvas id="mx11TimeChart"></canvas>
       </div>
     </div>
+    <div class="chart-container">
+      <div class="chart-title">各车日均测试时长对比</div>
+      <canvas id="avgDurChart"></canvas>
+    </div>
     <div class="chart-container" style="max-width:500px;margin:0 auto;">
       <div class="chart-title">需求者部门分布 (全部车辆)</div>
       <canvas id="overviewDepts"></canvas>
@@ -256,6 +260,38 @@ new Chart(document.getElementById('mx11TimeChart'), {
     responsive: true,
     plugins: { tooltip: { callbacks: { label: ctx => { const h = Math.floor(ctx.raw); const m = Math.round((ctx.raw-h)*60); return `${ctx.dataset.label}: ${h}:${String(m).padStart(2,'0')}`; } } } },
     scales: { y: { min: 7, max: 24, ticks: { callback: v => `${v}:00` }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } }
+  }
+});
+
+// Average daily duration bar chart
+const avgDurData = allData.map(car => ({
+  label: car.key,
+  avg: Math.round(car.totalH / car.days * 10) / 10,
+  color: typeColors[car.type]
+}));
+new Chart(document.getElementById('avgDurChart'), {
+  type: 'bar',
+  data: {
+    labels: avgDurData.map(d => d.label),
+    datasets: [{
+      label: '日均时长(h)',
+      data: avgDurData.map(d => d.avg),
+      backgroundColor: avgDurData.map(d => d.color + '99'),
+      borderColor: avgDurData.map(d => d.color),
+      borderWidth: 1.5,
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}h/天` } }
+    },
+    scales: {
+      y: { beginAtZero: true, title: { display: true, text: 'h/天' }, grid: { color: '#f0f0f0' } },
+      x: { grid: { display: false } }
+    }
   }
 });
 
