@@ -43,42 +43,24 @@
 
   <div class="overview-stats">
     <div class="overview-card"><div class="stat-value">6辆</div><div class="stat-label">活跃测试车</div></div>
-    <div class="overview-card"><div class="stat-value">226.7h</div><div class="stat-label">总测试时长</div></div>
+    <div class="overview-card"><div class="stat-value">238.7h</div><div class="stat-label">总测试时长</div></div>
     <div class="overview-card"><div class="stat-value">45条</div><div class="stat-label">测试记录</div></div>
-    <div class="overview-card"><div class="stat-value">7.6h</div><div class="stat-label">日均车时长</div></div>
+    <div class="overview-card"><div class="stat-value">8.0h</div><div class="stat-label">日均车时长</div></div>
   </div>
 
   <div class="section">
     <div class="section-title">车型总览对比</div>
     <div class="grid2">
-      <div class="chart-container">
-        <div class="chart-title">各车日均测试时长对比</div>
-        <canvas id="avgDurChart"></canvas>
-      </div>
-      <div class="chart-container">
-        <div class="chart-title">需求者部门分布 (全部车辆)</div>
-        <canvas id="overviewDepts"></canvas>
-      </div>
+      <div class="chart-container"><div class="chart-title">各车日均测试时长对比</div><canvas id="avgDurChart"></canvas></div>
+      <div class="chart-container"><div class="chart-title">需求者部门分布 (全部车辆)</div><canvas id="overviewDepts"></canvas></div>
     </div>
     <div class="grid2">
-      <div class="chart-container">
-        <div class="chart-title">MS11高配 各车每日测试时长对比</div>
-        <canvas id="ms11DurChart"></canvas>
-      </div>
-      <div class="chart-container">
-        <div class="chart-title">MX11 各车每日测试时长对比</div>
-        <canvas id="mx11DurChart"></canvas>
-      </div>
+      <div class="chart-container"><div class="chart-title">MS11高配 各车每日测试时长对比</div><canvas id="ms11DurChart"></canvas></div>
+      <div class="chart-container"><div class="chart-title">MX11 各车每日测试时长对比</div><canvas id="mx11DurChart"></canvas></div>
     </div>
     <div class="grid2">
-      <div class="chart-container">
-        <div class="chart-title">MS11高配 各车开始/结束时间对比</div>
-        <canvas id="ms11TimeChart"></canvas>
-      </div>
-      <div class="chart-container">
-        <div class="chart-title">MX11 各车开始/结束时间对比</div>
-        <canvas id="mx11TimeChart"></canvas>
-      </div>
+      <div class="chart-container"><div class="chart-title">MS11高配 各车开始/结束时间对比</div><canvas id="ms11TimeChart"></canvas></div>
+      <div class="chart-container"><div class="chart-title">MX11 各车开始/结束时间对比</div><canvas id="mx11TimeChart"></canvas></div>
     </div>
   </div>
 
@@ -93,60 +75,60 @@ const allData = [
   {
     key: "A14", label: "MS11高配-A14", type: "MS11高配", typeClass: "type-ms11",
     daily: [
-      {date:"08-04",h:8.5,s:8.83,e:17.33},
-      {date:"08-05",h:12.3,s:8.83,e:21.75},
-      {date:"08-06",h:8.8,s:8.83,e:17.67},
-      {date:"08-07",h:8.4,s:8.83,e:17.25}
+      {"date":"08-04","h":8.5,"s":8.83,"e":17.33},
+      {"date":"08-05","h":12.3,"s":8.83,"e":21.75},
+      {"date":"08-06","h":8.8,"s":8.83,"e":17.67},
+      {"date":"08-07","h":8.4,"s":8.83,"e":17.25}
     ],
     depts: [["系统部",5]], totalH: 38.0, days: 4, records: 5
   },
   {
     key: "J012", label: "MS11高配-J012", type: "MS11高配", typeClass: "type-ms11",
     daily: [
-      {date:"08-04",h:11.5,s:9.0,e:20.0},
-      {date:"08-05",h:9.8,s:9.33,e:19.17},
-      {date:"08-06",h:-3,s:9.5,e:13.5},
-      {date:"08-07",h:9.7,s:9.33,e:19.0}
+      {"date":"08-04","h":11.5,"s":9.0,"e":20.0},
+      {"date":"08-05","h":9.8,"s":9.33,"e":19.17},
+      {"date":"08-06","h":9,"s":9.5,"e":19.0},
+      {"date":"08-07","h":9.7,"s":9.33,"e":19.0}
     ],
-    depts: [["系统部",6]], totalH: 28.0, days: 4, records: 7
+    depts: [["系统部",6]], totalH: 40.0, days: 4, records: 7
   },
   {
     key: "A42", label: "MS11高配-A42", type: "MS11高配", typeClass: "type-ms11",
     daily: [
-      {date:"08-04",h:8.8,s:9.17,e:19.5},
-      {date:"08-05",h:9.5,s:9.5,e:19.0},
-      {date:"08-06",h:8.7,s:9.5,e:19.0},
-      {date:"08-07",h:9.5,s:9.5,e:21.0}
+      {"date":"08-04","h":8.8,"s":9.17,"e":19.5},
+      {"date":"08-05","h":9.5,"s":9.5,"e":19.0},
+      {"date":"08-06","h":8.7,"s":9.5,"e":19.0},
+      {"date":"08-07","h":9.5,"s":9.5,"e":21.0}
     ],
     depts: [["系统部",9]], totalH: 36.5, days: 4, records: 9
   },
   {
     key: "LV265", label: "MX11-LV265", type: "MX11", typeClass: "type-mx11",
     daily: [
-      {date:"08-04",h:12.7,s:9.37,e:22.02},
-      {date:"08-05",h:12.0,s:9.37,e:22.02},
-      {date:"08-06",h:8.4,s:9.37,e:17.75},
-      {date:"08-07",h:7.7,s:9.37,e:17.02}
+      {"date":"08-04","h":12.7,"s":9.37,"e":22.02},
+      {"date":"08-05","h":12.0,"s":9.37,"e":22.02},
+      {"date":"08-06","h":8.4,"s":9.37,"e":17.75},
+      {"date":"08-07","h":7.7,"s":9.37,"e":17.02}
     ],
     depts: [["系统部",4]], totalH: 40.8, days: 4, records: 6
   },
   {
     key: "mx013", label: "MX11-mx013", type: "MX11", typeClass: "type-mx11",
     daily: [
-      {date:"08-04",h:8,s:9.5,e:19.0},
-      {date:"08-05",h:10.5,s:9.5,e:20.0},
-      {date:"08-06",h:7.5,s:9.5,e:19.0},
-      {date:"08-07",h:11.5,s:9.5,e:21.0}
+      {"date":"08-04","h":8,"s":9.5,"e":19.0},
+      {"date":"08-05","h":10.5,"s":9.5,"e":20.0},
+      {"date":"08-06","h":7.5,"s":9.5,"e":19.0},
+      {"date":"08-07","h":11.5,"s":9.5,"e":21.0}
     ],
     depts: [["系统部",5],["算力平台",3]], totalH: 37.5, days: 4, records: 8
   },
   {
     key: "MV658", label: "MS12-MV658", type: "MS12", typeClass: "type-ms12",
     daily: [
-      {date:"08-04",h:17.5,s:9.0,e:21.0},
-      {date:"08-05",h:9.3,s:9.0,e:19.5},
-      {date:"08-06",h:9.1,s:9.0,e:19.0},
-      {date:"08-07",h:10.0,s:9.0,e:20.5}
+      {"date":"08-04","h":17.5,"s":9.0,"e":21.0},
+      {"date":"08-05","h":9.3,"s":9.0,"e":19.5},
+      {"date":"08-06","h":9.1,"s":9.0,"e":19.0},
+      {"date":"08-07","h":10.0,"s":9.0,"e":20.5}
     ],
     depts: [["系统部",10]], totalH: 45.9, days: 4, records: 10
   }
@@ -164,7 +146,7 @@ new Chart(document.getElementById('ms11DurChart'), {
       borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
     },{
       label: 'J012',
-      data: [11.5,9.8,-3,9.7],
+      data: [11.5,9.8,9,9.7],
       borderColor: '#f59e0b',
       borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
     },{
@@ -199,7 +181,7 @@ new Chart(document.getElementById('ms11TimeChart'), {
       pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
     },{
       label: 'J012 结束',
-      data: [20.0,19.17,13.5,19.0],
+      data: [20.0,19.17,19.0,19.0],
       borderColor: '#f59e0b', borderWidth: 2.5,
       pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
     },{
@@ -272,7 +254,6 @@ new Chart(document.getElementById('mx11TimeChart'), {
 });
 
 
-// Average daily duration horizontal bar chart
 const avgDurData = allData.map(car => ({
   label: car.key,
   avg: Math.round(car.totalH / car.days * 10) / 10,
@@ -280,56 +261,29 @@ const avgDurData = allData.map(car => ({
 }));
 new Chart(document.getElementById('avgDurChart'), {
   type: 'bar',
-  data: {
-    labels: avgDurData.map(d => d.label),
-    datasets: [{
-      label: '日均时长(h)',
-      data: avgDurData.map(d => d.avg),
-      backgroundColor: avgDurData.map(d => d.color + '99'),
-      borderColor: avgDurData.map(d => d.color),
-      borderWidth: 1.5, borderRadius: 4
-    }]
-  },
-  options: {
-    indexAxis: 'y', responsive: true,
-    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}h/天` } } },
-    scales: { x: { beginAtZero: true, title: { display: true, text: 'h/天' }, grid: { color: '#f0f0f0' } }, y: { grid: { display: false } } }
-  }
+  data: { labels: avgDurData.map(d => d.label), datasets: [{ label: '日均时长(h)', data: avgDurData.map(d => d.avg), backgroundColor: avgDurData.map(d => d.color + '99'), borderColor: avgDurData.map(d => d.color), borderWidth: 1.5, borderRadius: 4 }] },
+  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}h/天` } } }, scales: { x: { beginAtZero: true, title: { display: true, text: 'h/天' }, grid: { color: '#f0f0f0' } }, y: { grid: { display: false } } } }
 });
 
-// Department pie
 const deptEntries = [["系统部",39],["算力平台",3]];
 new Chart(document.getElementById('overviewDepts'), {
   type: 'doughnut',
-  data: {
-    labels: deptEntries.map(d => d[0]),
-    datasets: [{ data: deptEntries.map(d => d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0','#9ca3af','#f59e0b'], borderWidth: 0 }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: { position: 'bottom' },
-      tooltip: { callbacks: { label: ctx => { const total = 45; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } }
-    }
-  }
+  data: { labels: deptEntries.map(d => d[0]), datasets: [{ data: deptEntries.map(d => d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0','#9ca3af','#f59e0b'], borderWidth: 0 }] },
+  options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => { const total = 45; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } } } }
 });
 
-// Generate tabs
 const tabNav = document.getElementById('tabNav');
 const tabContents = document.getElementById('tabContents');
-
 allData.forEach((car, idx) => {
   const btn = document.createElement('button');
   btn.className = 'tab-btn' + (idx === 0 ? ' active' : '');
   btn.innerHTML = `${car.key} <span class="type-badge ${car.typeClass}">${car.type}</span>`;
   btn.onclick = () => switchTab(idx);
   tabNav.appendChild(btn);
-
   const div = document.createElement('div');
   div.className = 'tab-content' + (idx === 0 ? ' active' : '');
   div.id = `tab-${idx}`;
   const avgH = car.days > 0 ? Math.round(car.totalH / car.days * 10) / 10 : 0;
-
   div.innerHTML = `
     <div class="stats">
       <div class="stat-card"><div class="stat-value">${car.days}天</div><div class="stat-label">测试天数</div></div>
@@ -341,11 +295,9 @@ allData.forEach((car, idx) => {
     <div class="grid3">
       <div class="chart-container"><div class="chart-title">⏰ 每日开始/结束时间</div><canvas id="time-${idx}"></canvas></div>
       <div class="chart-container"><div class="chart-title">🏢 部门分布</div><canvas id="dept-${idx}"></canvas></div>
-    </div>
-  `;
+    </div>`;
   tabContents.appendChild(div);
 });
-
 const chartInstances = {};
 function renderTabCharts(idx) {
   if (chartInstances[idx]) return;
@@ -355,13 +307,11 @@ function renderTabCharts(idx) {
   const starts = car.daily.map(d => d.s);
   const ends = car.daily.map(d => d.e);
   const color = typeColors[car.type] || '#4361ee';
-
   const c1 = new Chart(document.getElementById(`dur-${idx}`), {
     type: 'bar',
     data: { labels: dates, datasets: [{ label: '时长(h)', data: durations, backgroundColor: durations.map(d => d > 10 ? color : color+'99'), borderRadius: 3 }] },
     options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'h' } }, x: { grid: { display: false } } } }
   });
-
   const formatTime = h => { const hr = Math.floor(h); const mn = Math.round((h-hr)*60); return `${hr}:${String(mn).padStart(2,'0')}`; };
   const c2 = new Chart(document.getElementById(`time-${idx}`), {
     type: 'line',
@@ -371,7 +321,6 @@ function renderTabCharts(idx) {
     ] },
     options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${formatTime(ctx.raw)}` } } }, scales: { y: { min: 7, max: 24, ticks: { callback: v => `${v}:00` } }, x: { grid: { display: false } } } }
   });
-
   const c3 = new Chart(document.getElementById(`dept-${idx}`), {
     type: 'doughnut',
     data: { labels: car.depts.map(d=>d[0]), datasets: [{ data: car.depts.map(d=>d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0','#9ca3af'].slice(0, car.depts.length), borderWidth: 0 }] },
@@ -379,13 +328,11 @@ function renderTabCharts(idx) {
   });
   chartInstances[idx] = [c1, c2, c3];
 }
-
 function switchTab(idx) {
   document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
   document.querySelectorAll('.tab-content').forEach((c, i) => c.classList.toggle('active', i === idx));
   setTimeout(() => renderTabCharts(idx), 50);
 }
-
 renderTabCharts(0);
 </script>
 </body>
