@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>上周测试时长统计 (2026-08-04 ~ 2026-08-08)</title>
+  <title>上周测试时长统计 (2026-08-10 ~ 2026-08-14)</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
   <style>
@@ -40,13 +40,13 @@
 </head>
 <body>
   <h1>📊 Infra测试车上周测试时长统计</h1>
-  <p class="subtitle">数据范围: 2026-08-04 ~ 2026-08-08 | 共6辆测试车</p>
+  <p class="subtitle">数据范围: 2026-08-10 ~ 2026-08-14 | 共6辆测试车</p>
 
   <div class="overview-stats">
     <div class="overview-card"><div class="stat-value">6辆</div><div class="stat-label">活跃测试车</div></div>
-    <div class="overview-card"><div class="stat-value">238.7h</div><div class="stat-label">总测试时长</div></div>
-    <div class="overview-card"><div class="stat-value">45条</div><div class="stat-label">测试记录</div></div>
-    <div class="overview-card"><div class="stat-value">8.0h</div><div class="stat-label">日均车时长</div></div>
+    <div class="overview-card"><div class="stat-value">329.7h</div><div class="stat-label">总测试时长</div></div>
+    <div class="overview-card"><div class="stat-value">57条</div><div class="stat-label">测试记录</div></div>
+    <div class="overview-card"><div class="stat-value">11.0h</div><div class="stat-label">日均车时长</div></div>
   </div>
 
   <div class="section">
@@ -72,209 +72,153 @@
   </div>
 
 <script>
-// 全局禁用 datalabels，只在需要的图表上单独启用
 Chart.defaults.plugins.datalabels = { display: false };
 
 const allData = [
   {
     key: "A14", label: "MS11高配-A14", type: "MS11高配", typeClass: "type-ms11",
     daily: [
-      {"date":"08-04","h":8.5,"s":8.83,"e":17.33},
-      {"date":"08-05","h":12.3,"s":8.83,"e":21.75},
-      {"date":"08-06","h":8.8,"s":8.83,"e":17.67},
-      {"date":"08-07","h":8.4,"s":8.83,"e":17.25}
+      {date:"08-10",h:12.0,s:8.83,e:22.17},
+      {date:"08-11",h:4.2,s:8.83,e:22.08},
+      {date:"08-12",h:11.0,s:8.83,e:20.67},
+      {date:"08-13",h:14.8,s:8.83,e:23.98},
+      {date:"08-14",h:12.3,s:8.83,e:22.42}
     ],
-    depts: [["系统部",5]], totalH: 38.0, days: 4, records: 5
+    depts: [["系统部",11]], totalH: 54.3, days: 5, records: 11
   },
   {
     key: "J012", label: "MS11高配-J012", type: "MS11高配", typeClass: "type-ms11",
     daily: [
-      {"date":"08-04","h":11.5,"s":9.0,"e":20.0},
-      {"date":"08-05","h":9.8,"s":9.33,"e":19.17},
-      {"date":"08-06","h":9,"s":9.5,"e":19.0},
-      {"date":"08-07","h":9.7,"s":9.33,"e":19.0}
+      {date:"08-10",h:9.7,s:9.33,e:19.0},
+      {date:"08-11",h:9.7,s:9.33,e:19.0},
+      {date:"08-12",h:9.7,s:9.33,e:19.0},
+      {date:"08-13",h:14.0,s:9.5,e:23.5},
+      {date:"08-14",h:11.5,s:9.5,e:22.0}
     ],
-    depts: [["系统部",6]], totalH: 40.0, days: 4, records: 7
+    depts: [["系统部",10]], totalH: 54.6, days: 5, records: 10
   },
   {
     key: "A42", label: "MS11高配-A42", type: "MS11高配", typeClass: "type-ms11",
     daily: [
-      {"date":"08-04","h":8.8,"s":9.17,"e":19.5},
-      {"date":"08-05","h":9.5,"s":9.5,"e":19.0},
-      {"date":"08-06","h":8.7,"s":9.5,"e":19.0},
-      {"date":"08-07","h":9.5,"s":9.5,"e":21.0}
+      {date:"08-10",h:9.9,s:9.33,e:19.67},
+      {date:"08-11",h:5.5,s:14.0,e:19.5},
+      {date:"08-12",h:10.0,s:9.5,e:19.67},
+      {date:"08-13",h:11.5,s:9.5,e:23.0},
+      {date:"08-14",h:8.7,s:9.5,e:20.0}
     ],
-    depts: [["系统部",9]], totalH: 36.5, days: 4, records: 9
+    depts: [["系统部",13]], totalH: 45.6, days: 5, records: 13
   },
   {
     key: "LV265", label: "MX11-LV265", type: "MX11", typeClass: "type-mx11",
     daily: [
-      {"date":"08-04","h":12.7,"s":9.37,"e":22.02},
-      {"date":"08-05","h":12.0,"s":9.37,"e":22.02},
-      {"date":"08-06","h":8.4,"s":9.37,"e":17.75},
-      {"date":"08-07","h":7.7,"s":9.37,"e":17.02}
+      {date:"08-10",h:8.4,s:9.38,e:17.76},
+      {date:"08-11",h:9.4,s:9.38,e:18.76},
+      {date:"08-12",h:10.4,s:9.38,e:17.76},
+      {date:"08-13",h:14.6,s:9.38,e:23.92},
+      {date:"08-14",h:12.6,s:9.38,e:21.92}
     ],
-    depts: [["系统部",4]], totalH: 40.8, days: 4, records: 6
+    depts: [["系统部",8]], totalH: 55.4, days: 5, records: 8
   },
   {
     key: "mx013", label: "MX11-mx013", type: "MX11", typeClass: "type-mx11",
     daily: [
-      {"date":"08-04","h":8,"s":9.5,"e":19.0},
-      {"date":"08-05","h":10.5,"s":9.5,"e":20.0},
-      {"date":"08-06","h":7.5,"s":9.5,"e":19.0},
-      {"date":"08-07","h":11.5,"s":9.5,"e":21.0}
+      {date:"08-10",h:10.0,s:9.5,e:19.5},
+      {date:"08-11",h:10.5,s:9.5,e:20.0},
+      {date:"08-12",h:10.5,s:9.5,e:20.0},
+      {date:"08-13",h:14.0,s:9.5,e:23.5},
+      {date:"08-14",h:14.5,s:9.5,e:23.98}
     ],
-    depts: [["系统部",5],["算力平台",3]], totalH: 37.5, days: 4, records: 8
+    depts: [["系统部",5]], totalH: 59.5, days: 5, records: 5
   },
   {
     key: "MV658", label: "MS12-MV658", type: "MS12", typeClass: "type-ms12",
     daily: [
-      {"date":"08-04","h":17.5,"s":9.0,"e":21.0},
-      {"date":"08-05","h":9.3,"s":9.0,"e":19.5},
-      {"date":"08-06","h":9.1,"s":9.0,"e":19.0},
-      {"date":"08-07","h":10.0,"s":9.0,"e":20.5}
+      {date:"08-10",h:12.0,s:9.0,e:22.25},
+      {date:"08-11",h:12.2,s:9.0,e:22.17},
+      {date:"08-12",h:9.1,s:9.0,e:19.5},
+      {date:"08-13",h:14.5,s:9.0,e:24.0},
+      {date:"08-14",h:12.5,s:9.0,e:22.5}
     ],
-    depts: [["系统部",10]], totalH: 45.9, days: 4, records: 10
+    depts: [["系统部",10]], totalH: 60.3, days: 5, records: 10
   }
 ];
 
-const typeColors = { "MS11高配": '#4361ee', "MS11低配": '#6366f1', "MX11": '#f72585', "MS12": '#4cc9f0' };
+const typeColors = { "MS11高配": '#4361ee', "MX11": '#f72585', "MS12": '#4cc9f0' };
 
+function getUnionDates(cars) {
+  const s = new Set();
+  cars.forEach(c => c.daily.forEach(d => s.add(d.date)));
+  return [...s].sort();
+}
+
+const ms11Cars = allData.filter(c => c.type === 'MS11高配');
+const ms11Dates = getUnionDates(ms11Cars);
+const ms11Colors = ['#2563eb','#f59e0b','#10b981'];
 
 new Chart(document.getElementById('ms11DurChart'), {
   type: 'line',
-  data: { labels: ["08-04","08-05","08-06","08-07"], datasets: [{
-      label: 'A14',
-      data: [8.5,12.3,8.8,8.4],
-      borderColor: '#2563eb',
-      borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'J012',
-      data: [11.5,9.8,9,9.7],
-      borderColor: '#f59e0b',
-      borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'A42',
-      data: [8.8,9.5,8.7,9.5],
-      borderColor: '#10b981',
-      borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
-    }] },
-  options: {
-    responsive: true,
-    plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw}h` } } },
-    scales: { y: { beginAtZero: true, title: { display: true, text: 'h' }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } }
-  }
+  data: { labels: ms11Dates, datasets: ms11Cars.map((car, i) => ({
+    label: car.key, data: ms11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.h : null; }),
+    borderColor: ms11Colors[i], borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
+  })) },
+  options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw}h` } } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: 'h' }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } } }
 });
 
 new Chart(document.getElementById('ms11TimeChart'), {
   type: 'line',
-  data: { labels: ["08-04","08-05","08-06","08-07"], datasets: [{
-      label: 'A14 开始',
-      data: [8.83,8.83,8.83,8.83],
-      borderColor: '#2563eb', borderDash: [5,3], borderWidth: 2,
-      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'A14 结束',
-      data: [17.33,21.75,17.67,17.25],
-      borderColor: '#2563eb', borderWidth: 2.5,
-      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'J012 开始',
-      data: [9.0,9.33,9.5,9.33],
-      borderColor: '#f59e0b', borderDash: [5,3], borderWidth: 2,
-      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'J012 结束',
-      data: [20.0,19.17,19.0,19.0],
-      borderColor: '#f59e0b', borderWidth: 2.5,
-      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'A42 开始',
-      data: [9.17,9.5,9.5,9.5],
-      borderColor: '#10b981', borderDash: [5,3], borderWidth: 2,
-      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'A42 结束',
-      data: [19.5,19.0,19.0,21.0],
-      borderColor: '#10b981', borderWidth: 2.5,
-      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
-    }] },
-  options: {
-    responsive: true,
-    plugins: { tooltip: { callbacks: { label: ctx => { const h = Math.floor(ctx.raw); const m = Math.round((ctx.raw-h)*60); return `${ctx.dataset.label}: ${h}:${String(m).padStart(2,'0')}`; } } } },
-    scales: { y: { min: 7, max: 24, ticks: { callback: v => `${v}:00` }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } }
-  }
+  data: { labels: ms11Dates, datasets: ms11Cars.flatMap((car, i) => [
+    { label: `${car.key} 开始`, data: ms11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.s : null; }),
+      borderColor: ms11Colors[i], borderDash: [5,3], borderWidth: 2, pointRadius: 2, tension: 0.3, fill: false, spanGaps: true },
+    { label: `${car.key} 结束`, data: ms11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.e : null; }),
+      borderColor: ms11Colors[i], borderWidth: 2.5, pointRadius: 2, tension: 0.3, fill: false, spanGaps: true }
+  ]) },
+  options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => { const h = Math.floor(ctx.raw); const m = Math.round((ctx.raw-h)*60); return `${ctx.dataset.label}: ${h}:${String(m).padStart(2,'0')}`; } } } },
+    scales: { y: { min: 7, max: 25, ticks: { callback: v => `${v}:00` }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } } }
 });
 
+const mx11Cars = allData.filter(c => c.type === 'MX11');
+const mx11Dates = getUnionDates(mx11Cars);
+const mx11Colors = ['#dc2626','#0891b2'];
 
 new Chart(document.getElementById('mx11DurChart'), {
   type: 'line',
-  data: { labels: ["08-04","08-05","08-06","08-07"], datasets: [{
-      label: 'LV265',
-      data: [12.7,12.0,8.4,7.7],
-      borderColor: '#dc2626',
-      borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'mx013',
-      data: [8,10.5,7.5,11.5],
-      borderColor: '#0891b2',
-      borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
-    }] },
-  options: {
-    responsive: true,
-    plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw}h` } } },
-    scales: { y: { beginAtZero: true, title: { display: true, text: 'h' }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } }
-  }
+  data: { labels: mx11Dates, datasets: mx11Cars.map((car, i) => ({
+    label: car.key, data: mx11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.h : null; }),
+    borderColor: mx11Colors[i], borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
+  })) },
+  options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw}h` } } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: 'h' }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } } }
 });
 
 new Chart(document.getElementById('mx11TimeChart'), {
   type: 'line',
-  data: { labels: ["08-04","08-05","08-06","08-07"], datasets: [{
-      label: 'LV265 开始',
-      data: [9.37,9.37,9.37,9.37],
-      borderColor: '#dc2626', borderDash: [5,3], borderWidth: 2,
-      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'LV265 结束',
-      data: [22.02,22.02,17.75,17.02],
-      borderColor: '#dc2626', borderWidth: 2.5,
-      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'mx013 开始',
-      data: [9.5,9.5,9.5,9.5],
-      borderColor: '#0891b2', borderDash: [5,3], borderWidth: 2,
-      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
-    },{
-      label: 'mx013 结束',
-      data: [19.0,20.0,19.0,21.0],
-      borderColor: '#0891b2', borderWidth: 2.5,
-      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
-    }] },
-  options: {
-    responsive: true,
-    plugins: { tooltip: { callbacks: { label: ctx => { const h = Math.floor(ctx.raw); const m = Math.round((ctx.raw-h)*60); return `${ctx.dataset.label}: ${h}:${String(m).padStart(2,'0')}`; } } } },
-    scales: { y: { min: 7, max: 24, ticks: { callback: v => `${v}:00` }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } }
-  }
+  data: { labels: mx11Dates, datasets: mx11Cars.flatMap((car, i) => [
+    { label: `${car.key} 开始`, data: mx11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.s : null; }),
+      borderColor: mx11Colors[i], borderDash: [5,3], borderWidth: 2, pointRadius: 2, tension: 0.3, fill: false, spanGaps: true },
+    { label: `${car.key} 结束`, data: mx11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.e : null; }),
+      borderColor: mx11Colors[i], borderWidth: 2.5, pointRadius: 2, tension: 0.3, fill: false, spanGaps: true }
+  ]) },
+  options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => { const h = Math.floor(ctx.raw); const m = Math.round((ctx.raw-h)*60); return `${ctx.dataset.label}: ${h}:${String(m).padStart(2,'0')}`; } } } },
+    scales: { y: { min: 7, max: 25, ticks: { callback: v => `${v}:00` }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } } }
 });
 
-
 const avgDurData = allData.map(car => ({
-  label: car.key,
-  avg: Math.round(car.totalH / car.days * 10) / 10,
-  color: typeColors[car.type] || '#4361ee'
+  label: car.key, avg: Math.round(car.totalH / car.days * 10) / 10, color: typeColors[car.type]
 }));
 new Chart(document.getElementById('avgDurChart'), {
   type: 'bar',
   data: { labels: avgDurData.map(d => d.label), datasets: [{ label: '日均时长(h)', data: avgDurData.map(d => d.avg), backgroundColor: avgDurData.map(d => d.color + '99'), borderColor: avgDurData.map(d => d.color), borderWidth: 1.5, borderRadius: 4 }] },
-  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}h/天` } }, datalabels: { display: true, anchor: 'end', align: 'right', formatter: val => val + 'h', font: { weight: 'bold', size: 12 }, color: '#333' } }, scales: { x: { beginAtZero: true, title: { display: true, text: 'h/天' }, grid: { color: '#f0f0f0' } }, y: { grid: { display: false } } } },
+  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}h/天` } }, datalabels: { display: true, anchor: 'end', align: 'right', formatter: val => val + 'h', font: { weight: 'bold', size: 12 }, color: '#333' } },
+    scales: { x: { beginAtZero: true, title: { display: true, text: 'h/天' }, grid: { color: '#f0f0f0' } }, y: { grid: { display: false } } } },
   plugins: [ChartDataLabels]
 });
 
-const deptEntries = [["系统部",39],["算力平台",3]];
+const deptEntries = [["系统部",57]];
 new Chart(document.getElementById('overviewDepts'), {
   type: 'doughnut',
-  data: { labels: deptEntries.map(d => d[0]), datasets: [{ data: deptEntries.map(d => d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0','#9ca3af','#f59e0b'], borderWidth: 0 }] },
-  options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => { const total = 45; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } } } }
+  data: { labels: deptEntries.map(d => d[0]), datasets: [{ data: deptEntries.map(d => d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0'], borderWidth: 0 }] },
+  options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => { const total = 57; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } } } }
 });
 
 const tabNav = document.getElementById('tabNav');
@@ -303,6 +247,7 @@ allData.forEach((car, idx) => {
     </div>`;
   tabContents.appendChild(div);
 });
+
 const chartInstances = {};
 function renderTabCharts(idx) {
   if (chartInstances[idx]) return;
@@ -311,24 +256,21 @@ function renderTabCharts(idx) {
   const durations = car.daily.map(d => d.h);
   const starts = car.daily.map(d => d.s);
   const ends = car.daily.map(d => d.e);
-  const color = typeColors[car.type] || '#4361ee';
+  const color = typeColors[car.type];
   const c1 = new Chart(document.getElementById(`dur-${idx}`), {
-    type: 'bar',
-    data: { labels: dates, datasets: [{ label: '时长(h)', data: durations, backgroundColor: durations.map(d => d > 10 ? color : color+'99'), borderRadius: 3 }] },
+    type: 'bar', data: { labels: dates, datasets: [{ label: '时长(h)', data: durations, backgroundColor: durations.map(d => d > 10 ? color : color+'99'), borderRadius: 3 }] },
     options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'h' } }, x: { grid: { display: false } } } }
   });
   const formatTime = h => { const hr = Math.floor(h); const mn = Math.round((h-hr)*60); return `${hr}:${String(mn).padStart(2,'0')}`; };
   const c2 = new Chart(document.getElementById(`time-${idx}`), {
-    type: 'line',
-    data: { labels: dates, datasets: [
+    type: 'line', data: { labels: dates, datasets: [
       { label: '开始', data: starts, borderColor: '#10b981', pointRadius: 2, tension: 0.3, fill: false },
       { label: '结束', data: ends, borderColor: '#ef4444', pointRadius: 2, tension: 0.3, fill: false }
     ] },
-    options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${formatTime(ctx.raw)}` } } }, scales: { y: { min: 7, max: 24, ticks: { callback: v => `${v}:00` } }, x: { grid: { display: false } } } }
+    options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${formatTime(ctx.raw)}` } } }, scales: { y: { min: 7, max: 25, ticks: { callback: v => `${v}:00` } }, x: { grid: { display: false } } } }
   });
   const c3 = new Chart(document.getElementById(`dept-${idx}`), {
-    type: 'doughnut',
-    data: { labels: car.depts.map(d=>d[0]), datasets: [{ data: car.depts.map(d=>d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0','#9ca3af'].slice(0, car.depts.length), borderWidth: 0 }] },
+    type: 'doughnut', data: { labels: car.depts.map(d=>d[0]), datasets: [{ data: car.depts.map(d=>d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0','#9ca3af'].slice(0, car.depts.length), borderWidth: 0 }] },
     options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
   });
   chartInstances[idx] = [c1, c2, c3];
