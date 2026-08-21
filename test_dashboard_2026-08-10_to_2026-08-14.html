@@ -44,9 +44,9 @@
 
   <div class="overview-stats">
     <div class="overview-card"><div class="stat-value">6辆</div><div class="stat-label">活跃测试车</div></div>
-    <div class="overview-card"><div class="stat-value">329.7h</div><div class="stat-label">总测试时长</div></div>
-    <div class="overview-card"><div class="stat-value">57条</div><div class="stat-label">测试记录</div></div>
-    <div class="overview-card"><div class="stat-value">11.0h</div><div class="stat-label">日均车时长</div></div>
+    <div class="overview-card"><div class="stat-value">335.2h</div><div class="stat-label">总测试时长</div></div>
+    <div class="overview-card"><div class="stat-value">58条</div><div class="stat-label">测试记录</div></div>
+    <div class="overview-card"><div class="stat-value">11.2h</div><div class="stat-label">日均车时长</div></div>
   </div>
 
   <div class="section">
@@ -101,12 +101,12 @@ const allData = [
     key: "A42", label: "MS11高配-A42", type: "MS11高配", typeClass: "type-ms11",
     daily: [
       {date:"08-10",h:9.9,s:9.33,e:19.67},
-      {date:"08-11",h:5.5,s:14.0,e:19.5},
+      {date:"08-11",h:6.0,s:9.5,e:19.5},
       {date:"08-12",h:10.0,s:9.5,e:19.67},
-      {date:"08-13",h:11.5,s:9.5,e:23.0},
-      {date:"08-14",h:8.7,s:9.5,e:20.0}
+      {date:"08-13",h:12.5,s:9.5,e:23.98},
+      {date:"08-14",h:12.7,s:9.5,e:23.98}
     ],
-    depts: [["系统部",13]], totalH: 45.6, days: 5, records: 13
+    depts: [["系统部",14]], totalH: 51.1, days: 5, records: 14
   },
   {
     key: "LV265", label: "MX11-LV265", type: "MX11", typeClass: "type-mx11",
@@ -214,11 +214,11 @@ new Chart(document.getElementById('avgDurChart'), {
   plugins: [ChartDataLabels]
 });
 
-const deptEntries = [["系统部",57]];
+const deptEntries = [["系统部",58]];
 new Chart(document.getElementById('overviewDepts'), {
   type: 'doughnut',
   data: { labels: deptEntries.map(d => d[0]), datasets: [{ data: deptEntries.map(d => d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0'], borderWidth: 0 }] },
-  options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => { const total = 57; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } } } }
+  options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => { const total = 58; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } } } }
 });
 
 const tabNav = document.getElementById('tabNav');
