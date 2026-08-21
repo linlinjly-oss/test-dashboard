@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>上周测试时长统计 (2026-07-27 ~ 2026-07-31)</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f7fa; padding: 24px; }
@@ -51,34 +52,16 @@
   <div class="section">
     <div class="section-title">车型总览对比</div>
     <div class="grid2">
-      <div class="chart-container">
-        <div class="chart-title">各车日均测试时长对比</div>
-        <canvas id="avgDurChart"></canvas>
-      </div>
-      <div class="chart-container">
-        <div class="chart-title">需求者部门分布 (全部车辆)</div>
-        <canvas id="overviewDepts"></canvas>
-      </div>
+      <div class="chart-container"><div class="chart-title">各车日均测试时长对比</div><canvas id="avgDurChart"></canvas></div>
+      <div class="chart-container"><div class="chart-title">需求者部门分布 (全部车辆)</div><canvas id="overviewDepts"></canvas></div>
     </div>
     <div class="grid2">
-      <div class="chart-container">
-        <div class="chart-title">MS11高配 各车每日测试时长对比</div>
-        <canvas id="ms11DurChart"></canvas>
-      </div>
-      <div class="chart-container">
-        <div class="chart-title">MX11 各车每日测试时长对比</div>
-        <canvas id="mx11DurChart"></canvas>
-      </div>
+      <div class="chart-container"><div class="chart-title">MS11高配 各车每日测试时长对比</div><canvas id="ms11DurChart"></canvas></div>
+      <div class="chart-container"><div class="chart-title">MX11 各车每日测试时长对比</div><canvas id="mx11DurChart"></canvas></div>
     </div>
     <div class="grid2">
-      <div class="chart-container">
-        <div class="chart-title">MS11高配 各车开始/结束时间对比</div>
-        <canvas id="ms11TimeChart"></canvas>
-      </div>
-      <div class="chart-container">
-        <div class="chart-title">MX11 各车开始/结束时间对比</div>
-        <canvas id="mx11TimeChart"></canvas>
-      </div>
+      <div class="chart-container"><div class="chart-title">MS11高配 各车开始/结束时间对比</div><canvas id="ms11TimeChart"></canvas></div>
+      <div class="chart-container"><div class="chart-title">MX11 各车开始/结束时间对比</div><canvas id="mx11TimeChart"></canvas></div>
     </div>
   </div>
 
@@ -89,6 +72,9 @@
   </div>
 
 <script>
+// 全局禁用 datalabels，只在需要的图表上单独启用
+Chart.defaults.plugins.datalabels = { display: false };
+
 const allData = [
   {
     key: "A14", label: "MS11高配-A14", type: "MS11高配", typeClass: "type-ms11",
@@ -265,7 +251,7 @@ new Chart(document.getElementById('mx11TimeChart'), {
   }
 });
 
-// Average daily duration horizontal bar chart
+// Average daily duration horizontal bar chart - 带数值标签
 const avgDurData = allData.map(car => ({
   label: car.key,
   avg: Math.round(car.totalH / car.days * 10) / 10,
@@ -289,13 +275,22 @@ new Chart(document.getElementById('avgDurChart'), {
     responsive: true,
     plugins: {
       legend: { display: false },
-      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}h/天` } }
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}h/天` } },
+      datalabels: {
+        display: true,
+        anchor: 'end',
+        align: 'right',
+        formatter: val => val + 'h',
+        font: { weight: 'bold', size: 12 },
+        color: '#333'
+      }
     },
     scales: {
       x: { beginAtZero: true, title: { display: true, text: 'h/天' }, grid: { color: '#f0f0f0' } },
       y: { grid: { display: false } }
     }
-  }
+  },
+  plugins: [ChartDataLabels]
 });
 
 // Department pie
