@@ -44,9 +44,9 @@
 
   <div class="overview-stats">
     <div class="overview-card"><div class="stat-value">6辆</div><div class="stat-label">活跃测试车</div></div>
-    <div class="overview-card"><div class="stat-value">238.7h</div><div class="stat-label">总测试时长</div></div>
+    <div class="overview-card"><div class="stat-value">243.0h</div><div class="stat-label">总测试时长</div></div>
     <div class="overview-card"><div class="stat-value">45条</div><div class="stat-label">测试记录</div></div>
-    <div class="overview-card"><div class="stat-value">8.0h</div><div class="stat-label">日均车时长</div></div>
+    <div class="overview-card"><div class="stat-value">10.1h</div><div class="stat-label">日均车时长</div></div>
   </div>
 
   <div class="section">
@@ -94,27 +94,27 @@ const allData = [
       {"date":"08-06","h":9,"s":9.5,"e":19.0},
       {"date":"08-07","h":9.7,"s":9.33,"e":19.0}
     ],
-    depts: [["系统部",6]], totalH: 40.0, days: 4, records: 7
+    depts: [["系统部",7]], totalH: 40.0, days: 4, records: 7
   },
   {
     key: "A42", label: "MS11高配-A42", type: "MS11高配", typeClass: "type-ms11",
     daily: [
-      {"date":"08-04","h":8.8,"s":9.17,"e":19.5},
+      {"date":"08-04","h":10.3,"s":9.17,"e":19.5},
       {"date":"08-05","h":9.5,"s":9.5,"e":19.0},
-      {"date":"08-06","h":8.7,"s":9.5,"e":19.0},
-      {"date":"08-07","h":9.5,"s":9.5,"e":21.0}
+      {"date":"08-06","h":9.5,"s":9.5,"e":19.0},
+      {"date":"08-07","h":11.5,"s":9.5,"e":21.0}
     ],
-    depts: [["系统部",9]], totalH: 36.5, days: 4, records: 9
+    depts: [["系统部",9]], totalH: 40.8, days: 4, records: 9
   },
   {
     key: "LV265", label: "MX11-LV265", type: "MX11", typeClass: "type-mx11",
     daily: [
-      {"date":"08-04","h":12.7,"s":9.37,"e":22.02},
-      {"date":"08-05","h":12.0,"s":9.37,"e":22.02},
-      {"date":"08-06","h":8.4,"s":9.37,"e":17.75},
-      {"date":"08-07","h":7.7,"s":9.37,"e":17.02}
+      {"date":"08-04","h":12.7,"s":9.38,"e":22.02},
+      {"date":"08-05","h":12.0,"s":9.38,"e":22.02},
+      {"date":"08-06","h":8.4,"s":9.38,"e":17.76},
+      {"date":"08-07","h":7.7,"s":9.38,"e":17.02}
     ],
-    depts: [["系统部",4]], totalH: 40.8, days: 4, records: 6
+    depts: [["系统部",6]], totalH: 40.8, days: 4, records: 6
   },
   {
     key: "mx013", label: "MX11-mx013", type: "MX11", typeClass: "type-mx11",
@@ -270,7 +270,7 @@ new Chart(document.getElementById('avgDurChart'), {
   plugins: [ChartDataLabels]
 });
 
-const deptEntries = [["系统部",39],["算力平台",3]];
+const deptEntries = [["系统部",42],["算力平台",3]];
 new Chart(document.getElementById('overviewDepts'), {
   type: 'doughnut',
   data: { labels: deptEntries.map(d => d[0]), datasets: [{ data: deptEntries.map(d => d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0','#9ca3af','#f59e0b'], borderWidth: 0 }] },
