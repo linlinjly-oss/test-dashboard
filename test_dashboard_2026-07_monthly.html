@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>7月测试时长月报 (2026-07)</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f7fa; padding: 24px; }
+    h1 { text-align: center; color: #1a1a2e; margin-bottom: 8px; font-size: 24px; }
+    .subtitle { text-align: center; color: #666; margin-bottom: 24px; font-size: 14px; }
+    .section { margin-bottom: 40px; }
+    .section-title { font-size: 20px; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid #4361ee; }
+    .chart-container { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .chart-title { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 12px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    canvas { max-height: 350px; }
+    .overview-stats { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 28px; }
+    .overview-card { background: linear-gradient(135deg, #4361ee, #3a0ca3); border-radius: 12px; padding: 18px 28px; text-align: center; color: #fff; min-width: 140px; }
+    .overview-card .stat-value { color: #fff; font-size: 26px; }
+    .overview-card .stat-label { color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 2px; }
+    @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>📊 Infra测试车7月测试时长月报</h1>
+  <p class="subtitle">数据范围: 2026-07-01 ~ 2026-07-31 | 共6辆测试车 | 23个工作日</p>
+  <div class="overview-stats">
+    <div class="overview-card"><div class="stat-value">6辆</div><div class="stat-label">活跃测试车</div></div>
+    <div class="overview-card"><div class="stat-value">1282.0h</div><div class="stat-label">总测试时长</div></div>
+    <div class="overview-card"><div class="stat-value">243条</div><div class="stat-label">测试记录</div></div>
+    <div class="overview-card"><div class="stat-value">9.3h</div><div class="stat-label">日均车时长</div></div>
+  </div>
+  <div class="section">
+    <div class="section-title">各车月度总时长对比</div>
+    <div class="grid2">
+      <div class="chart-container"><div class="chart-title">各车总测试时长</div><canvas id="totalChart"></canvas></div>
+      <div class="chart-container"><div class="chart-title">各车日均测试时长</div><canvas id="avgChart"></canvas></div>
+    </div>
+  </div>
+<script>
+Chart.defaults.plugins.datalabels = { display: false };
+const cars = [
+  { key: "A14", type: "MS11高配", totalH: 208.7, days: 23 },
+  { key: "J012", type: "MS11高配", totalH: 220.7, days: 23 },
+  { key: "A42", type: "MS11高配", totalH: 195.1, days: 23 },
+  { key: "LV265", type: "MX11", totalH: 151.0, days: 23 },
+  { key: "mx013", type: "MX11", totalH: 249.0, days: 23 },
+  { key: "MV658", type: "MS12", totalH: 257.5, days: 23 }
+];
+const typeColors = { "MS11高配": '#4361ee', "MX11": '#f72585', "MS12": '#4cc9f0' };
+const colors = cars.map(c => typeColors[c.type]);
+
+new Chart(document.getElementById('totalChart'), {
+  type: 'bar',
+  data: { labels: cars.map(c => c.key), datasets: [{ label: '总时长(h)', data: cars.map(c => c.totalH), backgroundColor: colors.map(c => c + '99'), borderColor: colors, borderWidth: 1.5, borderRadius: 4 }] },
+  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false }, datalabels: { display: true, anchor: 'end', align: 'right', formatter: v => v+'h', font: { weight: 'bold', size: 12 }, color: '#333' } }, scales: { x: { beginAtZero: true, title: { display: true, text: 'h' } }, y: { grid: { display: false } } } },
+  plugins: [ChartDataLabels]
+});
+
+new Chart(document.getElementById('avgChart'), {
+  type: 'bar',
+  data: { labels: cars.map(c => c.key), datasets: [{ label: '日均(h)', data: cars.map(c => Math.round(c.totalH/c.days*10)/10), backgroundColor: colors.map(c => c + '99'), borderColor: colors, borderWidth: 1.5, borderRadius: 4 }] },
+  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false }, datalabels: { display: true, anchor: 'end', align: 'right', formatter: v => v+'h', font: { weight: 'bold', size: 12 }, color: '#333' } }, scales: { x: { beginAtZero: true, title: { display: true, text: 'h/天' } }, y: { grid: { display: false } } } },
+  plugins: [ChartDataLabels]
+});
+</script>
+</body>
+</html>
