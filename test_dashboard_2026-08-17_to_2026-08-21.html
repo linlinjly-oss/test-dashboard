@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>上周测试时长统计 (2026-08-17 ~ 2026-08-21)</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f7fa; padding: 24px; }
+    h1 { text-align: center; color: #1a1a2e; margin-bottom: 8px; font-size: 24px; }
+    .subtitle { text-align: center; color: #666; margin-bottom: 24px; font-size: 14px; }
+    .section { margin-bottom: 40px; }
+    .section-title { font-size: 20px; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid #4361ee; }
+    .chart-container { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .chart-title { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 12px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid3 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    canvas { max-height: 300px; }
+    .stats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .stat-card { background: #fff; border-radius: 10px; padding: 14px 24px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06); flex: 1; min-width: 120px; }
+    .stat-value { font-size: 22px; font-weight: 700; color: #4361ee; }
+    .stat-label { font-size: 12px; color: #666; margin-top: 2px; }
+    .overview-stats { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 28px; }
+    .overview-card { background: linear-gradient(135deg, #4361ee, #3a0ca3); border-radius: 12px; padding: 18px 28px; text-align: center; color: #fff; min-width: 140px; }
+    .overview-card .stat-value { color: #fff; font-size: 26px; }
+    .overview-card .stat-label { color: rgba(255,255,255,0.8); }
+    .tab-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; justify-content: center; }
+    .tab-btn { padding: 8px 18px; border: none; border-radius: 20px; background: #e8ecf4; color: #333; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.2s; }
+    .tab-btn.active { background: #4361ee; color: #fff; }
+    .tab-btn:hover { background: #4361ee; color: #fff; opacity: 0.9; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .type-badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-left: 6px; font-weight: 400; }
+    .type-ms11 { background: #dbeafe; color: #1d4ed8; }
+    .type-mx11 { background: #fce7f3; color: #be185d; }
+    .type-ms12 { background: #d1fae5; color: #065f46; }
+    @media (max-width: 900px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>📊 Infra测试车上周测试时长统计</h1>
+  <p class="subtitle">数据范围: 2026-08-17 ~ 2026-08-21 | 共6辆测试车</p>
+
+  <div class="overview-stats">
+    <div class="overview-card"><div class="stat-value">6辆</div><div class="stat-label">活跃测试车</div></div>
+    <div class="overview-card"><div class="stat-value">284.1h</div><div class="stat-label">总测试时长</div></div>
+    <div class="overview-card"><div class="stat-value">54条</div><div class="stat-label">测试记录</div></div>
+    <div class="overview-card"><div class="stat-value">10.1h</div><div class="stat-label">日均车时长</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">车型总览对比</div>
+    <div class="grid2">
+      <div class="chart-container"><div class="chart-title">各车日均测试时长对比</div><canvas id="avgDurChart"></canvas></div>
+      <div class="chart-container"><div class="chart-title">需求者部门分布 (全部车辆)</div><canvas id="overviewDepts"></canvas></div>
+    </div>
+    <div class="grid2">
+      <div class="chart-container"><div class="chart-title">MS11高配 各车每日测试时长对比</div><canvas id="ms11DurChart"></canvas></div>
+      <div class="chart-container"><div class="chart-title">MX11 各车每日测试时长对比</div><canvas id="mx11DurChart"></canvas></div>
+    </div>
+    <div class="grid2">
+      <div class="chart-container"><div class="chart-title">MS11高配 各车开始/结束时间对比</div><canvas id="ms11TimeChart"></canvas></div>
+      <div class="chart-container"><div class="chart-title">MX11 各车开始/结束时间对比</div><canvas id="mx11TimeChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">各车详细数据</div>
+    <div class="tab-nav" id="tabNav"></div>
+    <div id="tabContents"></div>
+  </div>
+
+<script>
+Chart.defaults.plugins.datalabels = { display: false };
+
+const allData = [
+  {
+    key: "A14", label: "MS11高配-A14", type: "MS11高配", typeClass: "type-ms11",
+    daily: [
+      {date:"08-17",h:12.8,s:8.83,e:22.42},
+      {date:"08-18",h:9.5,s:8.83,e:18.33},
+      {date:"08-19",h:9.5,s:8.83,e:18.33},
+      {date:"08-20",h:9.5,s:8.83,e:18.33}
+    ],
+    depts: [["系统部",5]], totalH: 41.3, days: 4, records: 5
+  },
+  {
+    key: "J012", label: "MS11高配-J012", type: "MS11高配", typeClass: "type-ms11",
+    daily: [
+      {date:"08-17",h:9.7,s:9.33,e:19.0},
+      {date:"08-18",h:13.7,s:9.33,e:23.0},
+      {date:"08-19",h:10.8,s:9.5,e:20.0},
+      {date:"08-20",h:7.8,s:9.5,e:19.0},
+      {date:"08-21",h:8.2,s:9.5,e:19.0}
+    ],
+    depts: [["系统部",10]], totalH: 50.2, days: 5, records: 10
+  },
+  {
+    key: "A42", label: "MS11高配-A42", type: "MS11高配", typeClass: "type-ms11",
+    daily: [
+      {date:"08-17",h:9.5,s:9.5,e:19.0},
+      {date:"08-18",h:12.2,s:9.5,e:23.0},
+      {date:"08-19",h:10.2,s:9.5,e:21.0},
+      {date:"08-20",h:9.5,s:9.5,e:19.0}
+    ],
+    depts: [["系统部",13]], totalH: 41.4, days: 4, records: 13
+  },
+  {
+    key: "LV265", label: "MX11-LV265", type: "MX11", typeClass: "type-mx11",
+    daily: [
+      {date:"08-17",h:9.4,s:9.38,e:17.76},
+      {date:"08-18",h:9.9,s:9.38,e:19.76},
+      {date:"08-19",h:10.4,s:9.38,e:19.76},
+      {date:"08-20",h:10.4,s:9.38,e:19.76},
+      {date:"08-21",h:7.9,s:9.38,e:17.76}
+    ],
+    depts: [["系统部",8]], totalH: 48.0, days: 5, records: 8
+  },
+  {
+    key: "mx013", label: "MX11-mx013", type: "MX11", typeClass: "type-mx11",
+    daily: [
+      {date:"08-17",h:12.5,s:9.5,e:20.0},
+      {date:"08-18",h:14.0,s:9.5,e:23.5},
+      {date:"08-19",h:8.5,s:9.5,e:19.0},
+      {date:"08-20",h:9.5,s:9.5,e:19.0},
+      {date:"08-21",h:9.5,s:9.5,e:19.0}
+    ],
+    depts: [["系统部",7]], totalH: 54.0, days: 5, records: 7
+  },
+  {
+    key: "MV658", label: "MS12-MV658", type: "MS12", typeClass: "type-ms12",
+    daily: [
+      {date:"08-17",h:12.8,s:9.0,e:22.0},
+      {date:"08-18",h:12.1,s:9.0,e:22.0},
+      {date:"08-19",h:9.0,s:9.0,e:19.5},
+      {date:"08-20",h:7.8,s:9.0,e:19.0},
+      {date:"08-21",h:8.5,s:9.0,e:19.5}
+    ],
+    depts: [["系统部",11]], totalH: 50.2, days: 5, records: 11
+  }
+];
+
+const typeColors = { "MS11高配": '#4361ee', "MX11": '#f72585', "MS12": '#4cc9f0' };
+
+function getUnionDates(cars) {
+  const s = new Set();
+  cars.forEach(c => c.daily.forEach(d => s.add(d.date)));
+  return [...s].sort();
+}
+
+const ms11Cars = allData.filter(c => c.type === 'MS11高配');
+const ms11Dates = getUnionDates(ms11Cars);
+const ms11Colors = ['#2563eb','#f59e0b','#10b981'];
+
+new Chart(document.getElementById('ms11DurChart'), {
+  type: 'line',
+  data: { labels: ms11Dates, datasets: ms11Cars.map((car, i) => ({
+    label: car.key, data: ms11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.h : null; }),
+    borderColor: ms11Colors[i], borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
+  })) },
+  options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw}h` } } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: 'h' }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } } }
+});
+
+new Chart(document.getElementById('ms11TimeChart'), {
+  type: 'line',
+  data: { labels: ms11Dates, datasets: ms11Cars.flatMap((car, i) => [
+    { label: `${car.key} 开始`, data: ms11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.s : null; }),
+      borderColor: ms11Colors[i], borderDash: [5,3], borderWidth: 2, pointRadius: 2, tension: 0.3, fill: false, spanGaps: true },
+    { label: `${car.key} 结束`, data: ms11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.e : null; }),
+      borderColor: ms11Colors[i], borderWidth: 2.5, pointRadius: 2, tension: 0.3, fill: false, spanGaps: true }
+  ]) },
+  options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => { const h = Math.floor(ctx.raw); const m = Math.round((ctx.raw-h)*60); return `${ctx.dataset.label}: ${h}:${String(m).padStart(2,'0')}`; } } } },
+    scales: { y: { min: 7, max: 25, ticks: { callback: v => `${v}:00` }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } } }
+});
+
+const mx11Cars = allData.filter(c => c.type === 'MX11');
+const mx11Dates = getUnionDates(mx11Cars);
+const mx11Colors = ['#dc2626','#0891b2'];
+
+new Chart(document.getElementById('mx11DurChart'), {
+  type: 'line',
+  data: { labels: mx11Dates, datasets: mx11Cars.map((car, i) => ({
+    label: car.key, data: mx11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.h : null; }),
+    borderColor: mx11Colors[i], borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
+  })) },
+  options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw}h` } } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: 'h' }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } } }
+});
+
+new Chart(document.getElementById('mx11TimeChart'), {
+  type: 'line',
+  data: { labels: mx11Dates, datasets: mx11Cars.flatMap((car, i) => [
+    { label: `${car.key} 开始`, data: mx11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.s : null; }),
+      borderColor: mx11Colors[i], borderDash: [5,3], borderWidth: 2, pointRadius: 2, tension: 0.3, fill: false, spanGaps: true },
+    { label: `${car.key} 结束`, data: mx11Dates.map(d => { const r = car.daily.find(x => x.date === d); return r ? r.e : null; }),
+      borderColor: mx11Colors[i], borderWidth: 2.5, pointRadius: 2, tension: 0.3, fill: false, spanGaps: true }
+  ]) },
+  options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => { const h = Math.floor(ctx.raw); const m = Math.round((ctx.raw-h)*60); return `${ctx.dataset.label}: ${h}:${String(m).padStart(2,'0')}`; } } } },
+    scales: { y: { min: 7, max: 25, ticks: { callback: v => `${v}:00` }, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } } }
+});
+
+const avgDurData = allData.map(car => ({
+  label: car.key, avg: Math.round(car.totalH / car.days * 10) / 10, color: typeColors[car.type]
+}));
+new Chart(document.getElementById('avgDurChart'), {
+  type: 'bar',
+  data: { labels: avgDurData.map(d => d.label), datasets: [{ label: '日均时长(h)', data: avgDurData.map(d => d.avg), backgroundColor: avgDurData.map(d => d.color + '99'), borderColor: avgDurData.map(d => d.color), borderWidth: 1.5, borderRadius: 4 }] },
+  options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}h/天` } }, datalabels: { display: true, anchor: 'end', align: 'right', formatter: val => val + 'h', font: { weight: 'bold', size: 12 }, color: '#333' } },
+    scales: { x: { beginAtZero: true, title: { display: true, text: 'h/天' }, grid: { color: '#f0f0f0' } }, y: { grid: { display: false } } } },
+  plugins: [ChartDataLabels]
+});
+
+const deptEntries = [["系统部",54]];
+new Chart(document.getElementById('overviewDepts'), {
+  type: 'doughnut',
+  data: { labels: deptEntries.map(d => d[0]), datasets: [{ data: deptEntries.map(d => d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0'], borderWidth: 0 }] },
+  options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => { const total = 54; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } } } }
+});
+
+const tabNav = document.getElementById('tabNav');
+const tabContents = document.getElementById('tabContents');
+allData.forEach((car, idx) => {
+  const btn = document.createElement('button');
+  btn.className = 'tab-btn' + (idx === 0 ? ' active' : '');
+  btn.innerHTML = `${car.key} <span class="type-badge ${car.typeClass}">${car.type}</span>`;
+  btn.onclick = () => switchTab(idx);
+  tabNav.appendChild(btn);
+  const div = document.createElement('div');
+  div.className = 'tab-content' + (idx === 0 ? ' active' : '');
+  div.id = `tab-${idx}`;
+  const avgH = car.days > 0 ? Math.round(car.totalH / car.days * 10) / 10 : 0;
+  div.innerHTML = `
+    <div class="stats">
+      <div class="stat-card"><div class="stat-value">${car.days}天</div><div class="stat-label">测试天数</div></div>
+      <div class="stat-card"><div class="stat-value">${car.totalH}h</div><div class="stat-label">总测试时长</div></div>
+      <div class="stat-card"><div class="stat-value">${avgH}h</div><div class="stat-label">日均时长</div></div>
+      <div class="stat-card"><div class="stat-value">${car.records}条</div><div class="stat-label">记录数</div></div>
+    </div>
+    <div class="chart-container"><div class="chart-title">📈 每日测试时长 - ${car.label}</div><canvas id="dur-${idx}"></canvas></div>
+    <div class="grid3">
+      <div class="chart-container"><div class="chart-title">⏰ 每日开始/结束时间</div><canvas id="time-${idx}"></canvas></div>
+      <div class="chart-container"><div class="chart-title">🏢 部门分布</div><canvas id="dept-${idx}"></canvas></div>
+    </div>`;
+  tabContents.appendChild(div);
+});
+
+const chartInstances = {};
+function renderTabCharts(idx) {
+  if (chartInstances[idx]) return;
+  const car = allData[idx];
+  const dates = car.daily.map(d => d.date);
+  const durations = car.daily.map(d => d.h);
+  const starts = car.daily.map(d => d.s);
+  const ends = car.daily.map(d => d.e);
+  const color = typeColors[car.type];
+  const c1 = new Chart(document.getElementById(`dur-${idx}`), {
+    type: 'bar', data: { labels: dates, datasets: [{ label: '时长(h)', data: durations, backgroundColor: durations.map(d => d > 10 ? color : color+'99'), borderRadius: 3 }] },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'h' } }, x: { grid: { display: false } } } }
+  });
+  const formatTime = h => { const hr = Math.floor(h); const mn = Math.round((h-hr)*60); return `${hr}:${String(mn).padStart(2,'0')}`; };
+  const c2 = new Chart(document.getElementById(`time-${idx}`), {
+    type: 'line', data: { labels: dates, datasets: [
+      { label: '开始', data: starts, borderColor: '#10b981', pointRadius: 2, tension: 0.3, fill: false },
+      { label: '结束', data: ends, borderColor: '#ef4444', pointRadius: 2, tension: 0.3, fill: false }
+    ] },
+    options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${formatTime(ctx.raw)}` } } }, scales: { y: { min: 7, max: 25, ticks: { callback: v => `${v}:00` } }, x: { grid: { display: false } } } }
+  });
+  const c3 = new Chart(document.getElementById(`dept-${idx}`), {
+    type: 'doughnut', data: { labels: car.depts.map(d=>d[0]), datasets: [{ data: car.depts.map(d=>d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0','#9ca3af'].slice(0, car.depts.length), borderWidth: 0 }] },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+  });
+  chartInstances[idx] = [c1, c2, c3];
+}
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  document.querySelectorAll('.tab-content').forEach((c, i) => c.classList.toggle('active', i === idx));
+  setTimeout(() => renderTabCharts(idx), 50);
+}
+renderTabCharts(0);
+</script>
+</body>
+</html>

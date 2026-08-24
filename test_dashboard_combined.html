@@ -34,7 +34,8 @@
         </div>
         <div class="sidebar-section">
             <div class="sidebar-section-title">📅 周报</div>
-            <button class="sidebar-item active" onclick="switchTab('week1', this)">08-10 ~ 08-14</button>
+            <button class="sidebar-item active" onclick="switchTab('week0', this)">08-17 ~ 08-21</button>
+            <button class="sidebar-item" onclick="switchTab('week1', this)">08-10 ~ 08-14</button>
             <button class="sidebar-item" onclick="switchTab('week2', this)">08-03 ~ 08-07</button>
             <button class="sidebar-item" onclick="switchTab('week3', this)">07-27 ~ 07-31</button>
         </div>
@@ -45,7 +46,8 @@
         </div>
     </aside>
     <main class="main-content">
-        <div id="week1" class="content-frame active"><iframe src="test_dashboard_2026-08-10_to_2026-08-14.html"></iframe></div>
+        <div id="week0" class="content-frame active"><iframe src="test_dashboard_2026-08-17_to_2026-08-21.html"></iframe></div>
+        <div id="week1" class="content-frame" style="display:none"><iframe src="test_dashboard_2026-08-10_to_2026-08-14.html"></iframe></div>
         <div id="week2" class="content-frame" style="display:none"><iframe src="test_dashboard_2026-08-03_to_2026-08-07.html"></iframe></div>
         <div id="week3" class="content-frame" style="display:none"><iframe src="test_dashboard_2026-07-27_to_2026-07-31.html"></iframe></div>
         <div id="month1" class="content-frame" style="display:none"><div class="placeholder">🚧 8月月报数据生成中...</div></div>
