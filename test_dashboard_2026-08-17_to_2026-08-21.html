@@ -44,8 +44,8 @@
 
   <div class="overview-stats">
     <div class="overview-card"><div class="stat-value">6辆</div><div class="stat-label">活跃测试车</div></div>
-    <div class="overview-card"><div class="stat-value">284.1h</div><div class="stat-label">总测试时长</div></div>
-    <div class="overview-card"><div class="stat-value">54条</div><div class="stat-label">测试记录</div></div>
+    <div class="overview-card"><div class="stat-value">304.1h</div><div class="stat-label">总测试时长</div></div>
+    <div class="overview-card"><div class="stat-value">57条</div><div class="stat-label">测试记录</div></div>
     <div class="overview-card"><div class="stat-value">10.1h</div><div class="stat-label">日均车时长</div></div>
   </div>
 
@@ -81,9 +81,10 @@ const allData = [
       {date:"08-17",h:12.8,s:8.83,e:22.42},
       {date:"08-18",h:9.5,s:8.83,e:18.33},
       {date:"08-19",h:9.5,s:8.83,e:18.33},
-      {date:"08-20",h:9.5,s:8.83,e:18.33}
+      {date:"08-20",h:9.5,s:8.83,e:18.33},
+      {date:"08-21",h:9.5,s:8.83,e:18.33}
     ],
-    depts: [["系统部",5]], totalH: 41.3, days: 4, records: 5
+    depts: [["系统部",6]], totalH: 50.8, days: 5, records: 6
   },
   {
     key: "J012", label: "MS11高配-J012", type: "MS11高配", typeClass: "type-ms11",
@@ -102,9 +103,10 @@ const allData = [
       {date:"08-17",h:9.5,s:9.5,e:19.0},
       {date:"08-18",h:12.2,s:9.5,e:23.0},
       {date:"08-19",h:10.2,s:9.5,e:21.0},
-      {date:"08-20",h:9.5,s:9.5,e:19.0}
+      {date:"08-20",h:9.5,s:9.5,e:19.0},
+      {date:"08-21",h:9.5,s:9.5,e:19.0}
     ],
-    depts: [["系统部",13]], totalH: 41.4, days: 4, records: 13
+    depts: [["系统部",15]], totalH: 50.9, days: 5, records: 15
   },
   {
     key: "LV265", label: "MX11-LV265", type: "MX11", typeClass: "type-mx11",
@@ -212,11 +214,11 @@ new Chart(document.getElementById('avgDurChart'), {
   plugins: [ChartDataLabels]
 });
 
-const deptEntries = [["系统部",54]];
+const deptEntries = [["系统部",57]];
 new Chart(document.getElementById('overviewDepts'), {
   type: 'doughnut',
   data: { labels: deptEntries.map(d => d[0]), datasets: [{ data: deptEntries.map(d => d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0'], borderWidth: 0 }] },
-  options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => { const total = 54; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } } } }
+  options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => { const total = 57; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } } } }
 });
 
 const tabNav = document.getElementById('tabNav');
