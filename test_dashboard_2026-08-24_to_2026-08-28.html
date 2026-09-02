@@ -39,13 +39,13 @@
 </head>
 <body>
   <h1>📊 Infra测试车上周测试时长统计</h1>
-  <p class="subtitle">数据范围: 2026-08-24 ~ 2026-08-28 | 共5辆测试车</p>
+  <p class="subtitle">数据范围: 2026-08-24 ~ 2026-08-28 | 共6辆测试车</p>
 
   <div class="overview-stats">
-    <div class="overview-card"><div class="stat-value">5辆</div><div class="stat-label">活跃测试车</div></div>
-    <div class="overview-card"><div class="stat-value">204.4h</div><div class="stat-label">总测试时长</div></div>
-    <div class="overview-card"><div class="stat-value">39条</div><div class="stat-label">测试记录</div></div>
-    <div class="overview-card"><div class="stat-value">8.2h</div><div class="stat-label">日均车时长</div></div>
+    <div class="overview-card"><div class="stat-value">6辆</div><div class="stat-label">活跃测试车</div></div>
+    <div class="overview-card"><div class="stat-value">287.3h</div><div class="stat-label">总测试时长</div></div>
+    <div class="overview-card"><div class="stat-value">57条</div><div class="stat-label">测试记录</div></div>
+    <div class="overview-card"><div class="stat-value">9.6h</div><div class="stat-label">日均车时长</div></div>
   </div>
 
   <div class="section">
@@ -88,9 +88,11 @@ const allData = [
     daily: [
       {"date":"08-24","h":12.8,"s":9.17,"e":22.0},
       {"date":"08-25","h":7.5,"s":9.5,"e":19.0},
-      {"date":"08-26","h":9.5,"s":9.5,"e":20.0}
+      {"date":"08-26","h":9.5,"s":9.5,"e":20.0},
+      {"date":"08-27","h":7.5,"s":9.5,"e":19.0},
+      {"date":"08-28","h":11.0,"s":9.5,"e":22.5}
     ],
-    depts: [["系统部",4],["算力平台",3]], totalH: 29.8, days: 3, records: 7
+    depts: [["系统部",7],["算力平台",5]], totalH: 48.3, days: 5, records: 12
   },
   {
     key: "A42", label: "MS11高配-A42", type: "MS11高配", typeClass: "type-ms11",
@@ -104,13 +106,25 @@ const allData = [
     depts: [["系统部",10]], totalH: 45.3, days: 5, records: 10
   },
   {
+    key: "LV265", label: "MX11-LV265", type: "MX11", typeClass: "type-mx11",
+    daily: [
+      {"date":"08-24","h":11.9,"s":9.37,"e":21.73},
+      {"date":"08-25","h":12.7,"s":9.37,"e":22.0},
+      {"date":"08-26","h":7.9,"s":9.37,"e":17.25},
+      {"date":"08-27","h":9.7,"s":9.37,"e":19.0},
+      {"date":"08-28","h":9.7,"s":9.37,"e":19.0}
+    ],
+    depts: [["系统部",9]], totalH: 51.9, days: 5, records: 10
+  },
+  {
     key: "mx013", label: "MX11-mx013", type: "MX11", typeClass: "type-mx11",
     daily: [
       {"date":"08-24","h":9.5,"s":9.5,"e":19.0},
       {"date":"08-25","h":11.5,"s":9.5,"e":21.0},
-      {"date":"08-26","h":9.5,"s":9.5,"e":19.0}
+      {"date":"08-26","h":9.5,"s":9.5,"e":19.0},
+      {"date":"08-28","h":5.5,"s":17.0,"e":22.5}
     ],
-    depts: [["系统部",3]], totalH: 30.5, days: 3, records: 3
+    depts: [["系统部",4]], totalH: 36.0, days: 4, records: 5
   },
   {
     key: "MV658", label: "MS12-MV658", type: "MS12", typeClass: "type-ms12",
@@ -119,9 +133,9 @@ const allData = [
       {"date":"08-25","h":12.6,"s":9.0,"e":22.5},
       {"date":"08-26","h":9.8,"s":9.0,"e":20.25},
       {"date":"08-27","h":9.8,"s":9.0,"e":20.0},
-      {"date":"08-28","h":3.3,"s":9.0,"e":12.25}
+      {"date":"08-28","h":10.3,"s":9.0,"e":21.0}
     ],
-    depts: [["系统部",10]], totalH: 44.0, days: 5, records: 10
+    depts: [["系统部",11]], totalH: 51.0, days: 5, records: 11
   }
 ];
 
@@ -137,7 +151,7 @@ new Chart(document.getElementById('ms11DurChart'), {
       borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
     },{
       label: 'J012',
-      data: [12.8,7.5,9.5,null,null],
+      data: [12.8,7.5,9.5,7.5,11.0],
       borderColor: '#f59e0b',
       borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
     },{
@@ -167,12 +181,12 @@ new Chart(document.getElementById('ms11TimeChart'), {
       pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
     },{
       label: 'J012 开始',
-      data: [9.17,9.5,9.5,null,null],
+      data: [9.17,9.5,9.5,9.5,9.5],
       borderColor: '#f59e0b', borderDash: [5,3], borderWidth: 2,
       pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
     },{
       label: 'J012 结束',
-      data: [22.0,19.0,20.0,null,null],
+      data: [22.0,19.0,20.0,19.0,22.5],
       borderColor: '#f59e0b', borderWidth: 2.5,
       pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
     },{
@@ -196,10 +210,15 @@ new Chart(document.getElementById('ms11TimeChart'), {
 
 new Chart(document.getElementById('mx11DurChart'), {
   type: 'line',
-  data: { labels: ["08-24","08-25","08-26"], datasets: [{
-      label: 'mx013',
-      data: [9.5,11.5,9.5],
+  data: { labels: ["08-24","08-25","08-26","08-27","08-28"], datasets: [{
+      label: 'LV265',
+      data: [11.9,12.7,7.9,9.7,9.7],
       borderColor: '#dc2626',
+      borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
+    },{
+      label: 'mx013',
+      data: [9.5,11.5,9.5,null,5.5],
+      borderColor: '#0891b2',
       borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: false, spanGaps: true
     }] },
   options: {
@@ -211,15 +230,25 @@ new Chart(document.getElementById('mx11DurChart'), {
 
 new Chart(document.getElementById('mx11TimeChart'), {
   type: 'line',
-  data: { labels: ["08-24","08-25","08-26"], datasets: [{
-      label: 'mx013 开始',
-      data: [9.5,9.5,9.5],
+  data: { labels: ["08-24","08-25","08-26","08-27","08-28"], datasets: [{
+      label: 'LV265 开始',
+      data: [9.37,9.37,9.37,9.37,9.37],
       borderColor: '#dc2626', borderDash: [5,3], borderWidth: 2,
       pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
     },{
-      label: 'mx013 结束',
-      data: [19.0,21.0,19.0],
+      label: 'LV265 结束',
+      data: [21.73,22.0,17.25,19.0,19.0],
       borderColor: '#dc2626', borderWidth: 2.5,
+      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
+    },{
+      label: 'mx013 开始',
+      data: [9.5,9.5,9.5,null,17.0],
+      borderColor: '#0891b2', borderDash: [5,3], borderWidth: 2,
+      pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
+    },{
+      label: 'mx013 结束',
+      data: [19.0,21.0,19.0,null,22.5],
+      borderColor: '#0891b2', borderWidth: 2.5,
       pointRadius: 2, tension: 0.3, fill: false, spanGaps: true
     }] },
   options: {
@@ -241,11 +270,11 @@ new Chart(document.getElementById('avgDurChart'), {
   options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw}h/天` } } }, scales: { x: { beginAtZero: true, title: { display: true, text: 'h/天' }, grid: { color: '#f0f0f0' } }, y: { grid: { display: false } } } }
 });
 
-const deptEntries = [["系统部",36],["算力平台",3]];
+const deptEntries = [["系统部",50],["算力平台",5]];
 new Chart(document.getElementById('overviewDepts'), {
   type: 'doughnut',
   data: { labels: deptEntries.map(d => d[0]), datasets: [{ data: deptEntries.map(d => d[1]), backgroundColor: ['#4361ee','#f72585','#4cc9f0','#9ca3af','#f59e0b'], borderWidth: 0 }] },
-  options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => { const total = 39; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } } } }
+  options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => { const total = 57; return `${ctx.label}: ${ctx.raw}次 (${Math.round(ctx.raw/total*100)}%)`; } } } } }
 });
 
 const tabNav = document.getElementById('tabNav');
